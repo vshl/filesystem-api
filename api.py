@@ -1,6 +1,8 @@
 from flask import Flask, abort
 from flask_restful import Resource, Api, reqparse
 import os
+import pwd
+import stat
 
 app = Flask(__name__)
 api = Api(app)
@@ -43,12 +45,13 @@ def directory_contents(path):
     for file in files:
         file_attr = {}
         file_path = '{}/{}'.format(path, file)
+        file_attr['name'] = os.path.basename(file_path)
+        file_attr['owner'] = get_owner(file_path)
+        file_attr['size'] = '{} bytes'.format(os.path.getsize(file_path))
+        file_attr['permissions'] = get_permissions(file_path)
         if os.path.isfile(file_path):
-            file_attr['name'] = os.path.basename(file_path)
             file_attr['type'] = 'file'
-            file_attr['size'] = '{} bytes'.format(os.path.getsize(file_path))
         else:
-            file_attr['name'] = file
             file_attr['type'] = 'dir'
         json_body['data'].append(file_attr)
     return json_body
@@ -63,6 +66,23 @@ def send_file(path):
     """
     file = open(path, 'r')
     return file.read()
+
+def get_owner(path):
+    """Get owner of file or directory
+
+    Args:
+        path (str): file path
+    """
+    stat = os.stat(path)
+    return pwd.getpwuid(stat.st_uid)[0]
+
+def get_permissions(path):
+    """Get permission of file or directory in octal
+
+    Args:
+        path (str): file path
+    """
+    return oct(stat.S_IMODE(os.stat(path).st_mode))[-3:]
 
 if __name__ == "__main__":
     app.run(debug=True)
