@@ -1,10 +1,10 @@
 import pytest
-import filesystem
+import api
 
 @pytest.fixture
 def client():
-    filesystem.app.config['TESTING'] = True
-    client = filesystem.app.test_client()
+    api.app.config['TESTING'] = True
+    client = api.app.test_client()
     yield client
 
 def test_get_all(client):
