@@ -1,5 +1,5 @@
 from flask import Flask, abort
-from flask_restful import Resource, Api, reqparse
+from flask_restful import Api, reqparse
 import os
 import pwd
 import stat
@@ -29,7 +29,6 @@ def index(rel_path):
     if os.path.isfile(abs_path):
         return send_file(abs_path)
 
-    files = os.listdir(abs_path)
     return directory_contents(abs_path)
 
 def directory_contents(path):
