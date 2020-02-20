@@ -1,0 +1,9 @@
+version: '2'
+services:
+  api:
+    container_name: api-filesystem
+    build: .
+    ports:
+      - "5000:5000"
+    volumes:
+      - "~/filesystem:/filesystem"
