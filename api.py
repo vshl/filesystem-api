@@ -12,6 +12,13 @@ parser.add_argument('base_path', type=str, help='Base filepath')
 @app.route('/', defaults={'rel_path': ''}, methods=['GET'])
 @app.route('/<path:rel_path>')
 def index(rel_path):
+    """Parses a filepath and returns its contents
+
+    Takes a filepath and returns its contents whether directory or file
+
+    Args:
+        rel_path (str): filepath
+    """
     args = parser.parse_args()
     abs_path = os.path.join(args['base_path'], args['path'], rel_path)
     if not os.path.exists(abs_path):
@@ -24,6 +31,13 @@ def index(rel_path):
     return directory_contents(abs_path)
 
 def directory_contents(path):
+    """Returns directory contents in form of json 
+
+    Lists directory contents in a JSON body
+
+    Args:
+        path (str): directory path
+    """
     json_body = { 'data' : [] }
     files = os.listdir(path)
     for file in files:
@@ -40,6 +54,13 @@ def directory_contents(path):
     return json_body
 
 def send_file(path):
+    """Returns text file content
+
+    Reads a text file and returns its content
+
+    Args:
+        path (str): file path
+    """
     file = open(path, 'r')
     return file.read()
 
