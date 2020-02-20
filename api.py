@@ -7,12 +7,13 @@ api = Api(app)
 
 parser = reqparse.RequestParser()
 parser.add_argument('path', type=str, help='Filepath to browse contents')
+parser.add_argument('base_path', type=str, help='Base filepath')
 
 @app.route('/', defaults={'rel_path': ''}, methods=['GET'])
 @app.route('/<path:rel_path>')
 def index(rel_path):
     args = parser.parse_args()
-    abs_path = os.path.join(os.getcwd(), args['path'], rel_path)
+    abs_path = os.path.join(args['base_path'], args['path'], rel_path)
     if not os.path.exists(abs_path):
         return abort(404)
 
