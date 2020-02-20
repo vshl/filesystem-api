@@ -9,7 +9,6 @@ api = Api(app)
 
 parser = reqparse.RequestParser()
 parser.add_argument('path', type=str, help='Filepath to browse contents')
-parser.add_argument('base_path', type=str, help='Base filepath')
 
 @app.route('/', defaults={'rel_path': ''}, methods=['GET'])
 @app.route('/<path:rel_path>')
@@ -22,7 +21,7 @@ def index(rel_path):
         rel_path (str): filepath
     """
     args = parser.parse_args()
-    abs_path = os.path.join(args['base_path'], args['path'], rel_path)
+    abs_path = os.path.join(args['path'], rel_path)
     if not os.path.exists(abs_path):
         return abort(404)
 
@@ -84,4 +83,4 @@ def get_permissions(path):
     return oct(stat.S_IMODE(os.stat(path).st_mode))[-3:]
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=True, host='0.0.0.0')
