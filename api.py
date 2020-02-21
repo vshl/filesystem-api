@@ -63,7 +63,7 @@ def send_file(path):
         path (str): file path
     """
     file = open(path, 'r')
-    return file.read()
+    return { 'data' : [line.strip('\n') for line in file.readlines()] }
 
 def get_owner(path):
     """Get owner of file or directory

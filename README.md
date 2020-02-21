@@ -74,7 +74,11 @@ $> python3 filesystem.py /filesystem/foo /
 
 $> python3 filesystem.py /filesystem/foo /foo1
 
-Hello foo
+{
+  "data": [
+    "Hello foo"
+  ]
+}
 
 $> python3 filesystem.py /filesystem/foo /bar
 
