@@ -10,6 +10,8 @@ Flask app to display file information from a filesystem
     `bash ./mk_skelfs.sh`
 * Setup virtualenv to install necessary packages
 
+    `pip3 install virtualenv`
+
     `virtualenv venv`
 
     `source venv/bin/activate`
