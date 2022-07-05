@@ -27,7 +27,7 @@ python-language-server==0.31.8
 pytz==2019.3
 requests==2.23.0
 six==1.14.0
-ujson==1.35
+ujson==5.4.0
 urllib3==1.25.8
 wcwidth==0.1.8
 Werkzeug==1.0.0
